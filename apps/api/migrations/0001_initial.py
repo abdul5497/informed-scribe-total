@@ -7,6 +7,8 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
+    atomic = False # **<<< HERE**
+
     initial = True
 
     dependencies = [
