@@ -1,5 +1,5 @@
 """
-WSGI config for Projectsky project.
+WSGI config for InformedScribe project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

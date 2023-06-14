@@ -1,63 +1,166 @@
 {% extends "web/app/app_base.html" %}
 {% load static %}
 {% load i18n %}
+
 {% block app %}
 <section class="app-card">
-  <h1 class="pg-title">Subscription Demo</h1>
-  <h1 class="pg-subtitle">Basic examples to get you going with feature-gating based on subscriptions.</h1>
-  <p>Tip: the source of this page can be found at <code>templates/subscriptions/demo.html</code></p>
-</section>
-<section class="app-card">
-  <h1 class="pg-subtitle">Changing Content Based on a Subscription</h1>
-  <p>The text and color below will change based on whether you have an active subscription.</p>
-  {% if subscription %}
-    <div class="my-2 pg-text-centered pg-text-success">
-      <p>You're subscribed to {{ subscription.display_name }}! Hooray!</p>
+  <h1>Informed Scribe</h1>
+  <div class="bubble_page">
+    <div class="left-section">
+      <div class="option-section">
+        <div class="first-option-section">
+          <input type="checkbox" class="checkbox-style" name="grammar" value="grammar" id="grammar" />
+          <label for="grammar" class="label-style"> Grammar</label>
+
+          <input type="checkbox" class="checkbox-style" name="spelling" value="spelling" id="spelling">
+          <label for="spelling" class="label-style"> Spelling</label>
+
+          <input type="checkbox" class="checkbox-style" name="tone" value="tone" id="tone" />
+          <label for="tone" class="label-style"> Tone</label>
+        </div>
+        <div class="second-option-section">
+
+          <input type="checkbox" class="checkbox-style" name="readability" value="readability" id="readability" />
+          <label for="readability" class="label-style">Readability</label>
+
+          <input type="checkbox" class="checkbox-style" name="spanish" value="spanish" id="spanish" />
+          <label for="spanish" class="label-style">Spanish</label>
+
+          <input type="checkbox" class="checkbox-style" name="business" value="business" id="business" />
+          <label for="business" class="label-style">Business Writting</label>
+
+        </div>
+        <div class="second-option-section" id="chatgptOption">
+          <input type="checkbox" class="checkbox-style" name="custom" value="custom" id="custom" />
+          <input type="text" class="custom-label-style" id="custom-label">
+        </div>
+
+      </div>
+      <div class="audio-section">
+        <div id="error" class="isa_error"></div>
+
+        <textarea class="bubble_textarea_element" id="transcript" placeholder="Press Start and speak into your mic">
+					</textarea>
+        <div class="font_button_style">
+          <button class="font_bigger_style" id="font-big">A</button>
+          <button class="font_smaller_style" id="font-small">A</button>
+        </div>
+      </div>
+      <div class="button-section">
+        <button class="bubble_button_element" id="start-button">Transcribe</button>
+        <button class="bubble_button_element" id="stop-button">Stop</button>
+      </div>
     </div>
-  {% else %}
-    <div class="my-2 pg-text-centered pg-text-info">
-      <p>It doesn't look like you're subscribed. <a href="{{ subscription_urls.subscription_details }}"><strong>Upgrade Here!</strong></a></p>
+    <div class="right-section">
+      <div class="option-section">
+        <textarea id="addionalNotes" name="addionalNotes" class="type-section" rows="5" cols="50"></textarea>
+
+        <div class="font_button_style">
+          <button class="font_bigger_style" id="addionalNotes-font-big">A</button>
+          <button class="font_smaller_style" id="addionalNotes-font-small">A</button>
+        </div>
+      </div>
+      <div class="bubble-element-group">
+        <textarea class="result-section" id="result-textarea">
+					</textarea>
+        <div class="loading-div">
+          <span id="loading-icon" class="loading-icon"></span>
+        </div>
+        <div class="font_button_style">
+          <button class="font_bigger_style" id="result-section-font-big">A</button>
+          <button class="font_smaller_style" id="result-section-font-small">A</button>
+        </div>
+      </div>
+
+      <div class="button-section">
+        <button class="bubble_button_element" id="copy">Copy</button>
+        <div id="message" class="hidden">Copied to clipboard!</div>
+        <button class="bubble_button_element" id="submit">Submit</button>
+      </div>
+
+
     </div>
-  {% endif %}
-</section>
-<section class="app-card">
-  <h1 class="pg-subtitle">Viewing Subscription Details</h1>
-  <p class="pg-content">
-    If you're subscribed to a plan, go to
-    <a href="{{ subscription_urls.subscription_details }}">the subscription details page</a>
-    to see an example of showing information about the subscription.
-  </p>
-</section>
-<section class="app-card">
-  <h1 class="pg-subtitle">Restricting Access to a Page</h1>
-  <div class="pg-content">
-    <p>
-      <a href="{{ subscription_urls.subscription_gated_page }}">This page</a> is only available if you are subscribed to a plan.
-    </p>
-    <p>
-      The code for this page can be found in the <code>subscription_gated_page</code> view in
-      <code>apps/subscriptions/views.py</code>
-    </p>
+
+    <button class="image-button" id="refresh-button">
+      <span class="image-button-icon"></span>
+    </button>
   </div>
 </section>
-<section class="app-card">
-  <h1 class="pg-subtitle">{% translate "Metered Billing" %}</h1>
-  <p class="pg-content">
-    {% if subscription.is_metered %}
-      {% with subscription_urls.metered_billing_demo as metered_billing_demo_url %}
-      {% blocktranslate %}
-        You're subscribed to a plan that supports metered usage.
-        You can update the amount this subscription has used from the <a href="{{ metered_billing_demo_url }}">metered billing demo page</a>.
-      {% endblocktranslate %}
-      {% endwith %}
-    {% else %}
-      {% blocktranslate %}
-        You aren't currently subscribed to a plan that supports metered usage.
-        To use the metered billing integration, first create and subscribe to a metered plan.
-        More details are available in
-        <a href="https://stripe.com/docs/products-prices/pricing-models#usage-based-pricing" target="_blank">the Stripe documentation</a>.
-      {% endblocktranslate %}
-    {% endif %}
-  </p>
-</section>
+{% endblock %}
+
+{% block page_js %}
+<script src="{% static 'js/app-bundle.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/socket.io-client@4.3.2/dist/socket.io.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+
+    // const socket = io('http://localhost:8000');
+
+    // socket.on('connect', () => {
+    //   console.log('Socket.IO connection established.');
+    // });
+
+
+    // socket.on('message', (data) => {
+    //   console.log('Received:', data);
+    // });
+
+
+    document.getElementById("start-button").onclick = function () {
+      alert("start-button clicked");
+      // socket.connect();
+    };
+
+    document.getElementById("stop-button").onclick = function () {
+      alert("stop-button clicked");
+      // socket.disconnect();
+    };
+
+    document.getElementById("refresh-button").onclick = function () {
+      location.reload();
+    };
+
+    document.getElementById("font-big").onclick = function () {
+      var transcribeTextArea = document.getElementById("transcript");
+      var currentFontSize = parseFloat(window.getComputedStyle(transcribeTextArea).getPropertyValue('font-size'));
+      var newFontSize = currentFontSize + 2;
+      transcribeTextArea.style.fontSize = newFontSize + 'px';
+    };
+
+    document.getElementById("font-small").onclick = function () {
+      var transcribeTextArea = document.getElementById("transcript");
+      var currentFontSize = parseFloat(window.getComputedStyle(transcribeTextArea).getPropertyValue('font-size'));
+      var newFontSize = currentFontSize - 2;
+      transcribeTextArea.style.fontSize = newFontSize + 'px';
+    };
+
+    document.getElementById("addionalNotes-font-big").onclick = function () {
+      var transcribeTextArea = document.getElementById("addionalNotes");
+      var currentFontSize = parseFloat(window.getComputedStyle(transcribeTextArea).getPropertyValue('font-size'));
+      var newFontSize = currentFontSize + 2;
+      transcribeTextArea.style.fontSize = newFontSize + 'px';
+    };
+
+    document.getElementById("addionalNotes-font-small").onclick = function () {
+      var transcribeTextArea = document.getElementById("addionalNotes");
+      var currentFontSize = parseFloat(window.getComputedStyle(transcribeTextArea).getPropertyValue('font-size'));
+      var newFontSize = currentFontSize - 2;
+      transcribeTextArea.style.fontSize = newFontSize + 'px';
+    };
+
+    document.getElementById("result-section-font-big").onclick = function () {
+      var transcribeTextArea = document.getElementById("result-textarea");
+      var currentFontSize = parseFloat(window.getComputedStyle(transcribeTextArea).getPropertyValue('font-size'));
+      var newFontSize = currentFontSize + 2;
+      transcribeTextArea.style.fontSize = newFontSize + 'px';
+    };
+
+    document.getElementById("result-section-font-small").onclick = function () {
+      var transcribeTextArea = document.getElementById("result-textarea");
+      var currentFontSize = parseFloat(window.getComputedStyle(transcribeTextArea).getPropertyValue('font-size'));
+      var newFontSize = currentFontSize - 2;
+      transcribeTextArea.style.fontSize = newFontSize + 'px';
+    };
+  });
+</script>
 {% endblock %}

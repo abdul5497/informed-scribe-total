@@ -1,7 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Projectsky
+ * InformedScribe
  * The most amazing SaaS application the world has ever seen
  *
  * The version of the OpenAPI document: 0.1.0

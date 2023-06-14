@@ -1079,7 +1079,7 @@ msgstr "Application"
 msgid "Dashboard"
 msgstr "Tableau de bord"
 
-msgid "OpenAI Demos"
+msgid "Medical Assistant"
 msgstr ""
 
 msgid "My Account"

@@ -1,4 +1,4 @@
-# Projectsky
+# InformedScribe
 
 The most amazing SaaS application the world has ever seen
 

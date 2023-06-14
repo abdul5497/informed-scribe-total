@@ -1045,7 +1045,7 @@ msgstr ""
 msgid "Dashboard"
 msgstr ""
 
-msgid "OpenAI Demos"
+msgid "Medical Assistant"
 msgstr ""
 
 msgid "My Account"

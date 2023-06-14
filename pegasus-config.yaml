@@ -13,7 +13,7 @@ default_context:
   enable_twitter_login: n
   front_end_framework: htmx
   post_process: y
-  project_name: Projectsky
+  project_name: InformedScribe
   project_slug: ifh_saas_app
   stripe_payment_mode: checkout
   subscription_billing_model: per_unit
