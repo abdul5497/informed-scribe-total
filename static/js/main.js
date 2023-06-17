@@ -80,6 +80,8 @@
    */
   let selectHeader = select('#header')
   if (selectHeader) {
+    console.log("scrolled");
+    
     const headerScrolled = () => {
       if (window.scrollY > 100) {
         selectHeader.classList.add('header-scrolled')

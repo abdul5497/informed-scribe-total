@@ -1,35 +1,47 @@
 {% extends 'web/app/app_base.html' %}
 {% block app %}
 {% load static %}
-<div class="app-card">
-  <h1 class="pg-title">Medical Assistant Chatbox</h1>
-  <h2 class="pg-subtitle">Quickly integrate ChatGPT or Dall-E's image generation in your Django application.</h2>
-</div>
-<div class="pg-columns">
-  <div class="pg-column">
-    <div class="pg-card h-100">
-      <div class="pg-card-image">
-        <figure class="image pg-ratio-3x2">
-          <img class="img-fluid" src="{% static 'images/openai_example/chatgpt-logo.png' %}" alt="ChatGPT Logo">
-        </figure>
+<section class="app-card">
+  <h1>Informed CareGuide</h1>
+  <div class="bubble_page">
+    <div class="left-section">
+      <div class="option-section1">
+        <form method="POST" action="/openai/upload_file" enctype="multipart/form-data">
+          {% csrf_token %}
+          <input type="file" name="file" required>
+          <button type="submit">Upload</button>
+        </form>
       </div>
-      <div class="pg-card-body">
-        <div class="pg-content">
-          <h3>ChatGPT</h3>
-          <p>
-            Use <a href="https://openai.com/blog/chatgpt" target="_blank">ChatGPT</a> to automatically respond to user input or questions.
-          </p>
+
+      <div class="audio-section">
+        <div id="error" class="isa_error"></div>
+        <div class="bubble-element-group">
+          <textarea class="result-section" id="result-textarea">
+            </textarea>
+          <div class="loading-div">
+            <span id="loading-icon" class="loading-icon"></span>
+          </div>
+          <div class="font_button_style">
+            <button class="font_bigger_style" id="result-section-font-big">A</button>
+            <button class="font_smaller_style" id="result-section-font-small">A</button>
+          </div>
         </div>
-        <div class="buttons">
-          <a href="{% url 'chat:chat_home' %}" class="pg-button-secondary">
-            <span>ChatGPT Demo</span>
-            <span class="pg-icon">
-              <i class="fa fa-angle-double-right"></i>
-            </span>
-          </a>
+
+        <textarea class="bubble_medical_textarea_element" id="transcript" placeholder="e.g. 'How can I treat my hurt?'">
+        </textarea>
+      </div>
+
+    </div>
+    <div class="right-section">
+      <div class="option-section">
+        <textarea id="addionalNotes" name="addionalNotes" class="type-section" rows="5" cols="50"></textarea>
+
+        <div class="font_button_style">
+          <button class="font_bigger_style" id="addionalNotes-font-big">A</button>
+          <button class="font_smaller_style" id="addionalNotes-font-small">A</button>
         </div>
       </div>
     </div>
   </div>
-</div>
+</section>
 {% endblock %}

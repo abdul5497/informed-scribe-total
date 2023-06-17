@@ -94,26 +94,21 @@
 <script>
   document.addEventListener('DOMContentLoaded', () => {
 
-    // const socket = io('http://localhost:8000');
 
-    // socket.on('connect', () => {
-    //   console.log('Socket.IO connection established.');
-    // });
+    const socket = new WebSocket("ws://localhost:8000/ws/");
 
-
-    // socket.on('message', (data) => {
-    //   console.log('Received:', data);
-    // });
-
-
+    socket.onmessage = function (event) {
+        const data = JSON.parse(event.data);
+        console.log(data);
+        document.querySelector('#number').innerHTML = data.number;
+    }
+    
     document.getElementById("start-button").onclick = function () {
       alert("start-button clicked");
-      // socket.connect();
     };
 
     document.getElementById("stop-button").onclick = function () {
       alert("stop-button clicked");
-      // socket.disconnect();
     };
 
     document.getElementById("refresh-button").onclick = function () {

@@ -7,4 +7,5 @@ app_name = "openai_example"
 urlpatterns = [
     path("", views.home, name="openai_home"),
     path("images/", views.image_demo, name="image_demo"),
+    path("upload_file", views.upload_file, name="openai_home_upload"),
 ]

@@ -38,7 +38,9 @@
   {% include 'web/components/favicon.html' %}
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="{% static '/vendor/aos/aos.css' %}" rel="stylesheet">
@@ -73,8 +75,7 @@
   <script src="{% static 'js/site-bundle.js'%}"></script>
   <script type="text/javascript">__cssFramework = 'bootstrap';</script>
   <script src="{% url 'javascript-catalog' %}"></script>
-
-  <!-- Vendor JS Files -->
+  <!-- Template Main JS File -->
   <script src="{% static 'vendor/aos/aos.js'%}"></script>
   <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
   <script src="{% static 'vendor/glightbox/js/glightbox.min.js'%}"></script>
@@ -82,9 +83,13 @@
   <script src="{% static 'vendor/swiper/swiper-bundle.min.js'%}"></script>
   <script src="{% static 'vendor/waypoints/noframework.waypoints.js'%}"></script>
   <script src="{% static 'vendor/php-email-form/validate.js'%}"></script>
-
-  <!-- Template Main JS File -->
+  
   <script src="{% static 'js/main.js'%}"></script>
+
+  <!-- Vendor JS Files -->
+  
+
+
   {% block page_head %}
   {% endblock %}
 </head>

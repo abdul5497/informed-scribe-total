@@ -15948,7 +15948,7 @@ hr.horizontal.gray-light {
 }
 
 .navbar {
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.16);
+  /* box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.16); */
 }
 .navbar .navbar-brand {
   color: #212529;

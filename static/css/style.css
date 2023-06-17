@@ -10,8 +10,8 @@
 # General
 --------------------------------------------------------------*/
 body {
-  font-family: "Open Sans", sans-serif;
-  color: #444444;
+  font-family: "Open Sans", sans-serif !important;
+  color: #444444 !important;
 }
 
 a {
@@ -104,6 +104,30 @@ h6 {
   opacity: 1;
 }
 
+
+/* Style for the custom button */
+.custom-upload {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+  border: none;
+  transition: background-color 0.3s;
+}
+
+/* Style for the hidden file input */
+.custom-upload input[type="file"] {
+  display: none;
+}
+
+/* Hover effect */
+.custom-upload:hover {
+  background-color: #45a049;
+}
+
+
 /*--------------------------------------------------------------
 # Header
 --------------------------------------------------------------*/
@@ -115,7 +139,7 @@ h6 {
 
 #header.header-scrolled,
 #header.header-inner-pages {
-  background: rgba(40, 58, 90, 0.9);
+  background: rgba(40, 58, 90, 0.9) !important;
 }
 
 #header .logo {
@@ -160,15 +184,15 @@ h6 {
 
 .navbar a,
 .navbar a:focus {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 0 10px 30px;
-  font-size: 15px;
-  font-weight: 500;
-  color: #fff;
-  white-space: nowrap;
-  transition: 0.3s;
+  display: flex !important;
+  align-items: center !important;
+  /* justify-content: space-between; */
+  padding: 10px 0 10px 30px !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  color: #fff !important;
+  white-space: nowrap !important;
+  transition: 0.3s !important;
 }
 
 .navbar a i,
@@ -220,6 +244,12 @@ h6 {
 
 .navbar .dropdown ul li {
   min-width: 200px;
+}
+
+.option-section1{
+  display: flex;
+  width: 100%;
+  justify-items: left;
 }
 
 .navbar .dropdown ul a {
@@ -1195,6 +1225,9 @@ section {
 --------------------------------------------------------------*/
 .pricing .row {
   padding-top: 40px;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
 }
 
 .pricing .box {
@@ -1821,4 +1854,26 @@ section {
   #footer .credits {
     padding-top: 4px;
   }
+}
+
+/*Medical Assistant CSS*/
+.bubble_medical_textarea_element {
+  min-width: 456px;
+  height: 40px;
+  overflow: hidden;
+  z-index: 6;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(9, 23, 71, 0.15);
+  border-image: initial;
+  background-color: transparent;
+  border-radius: 10px;
+  box-shadow: rgb(170 170 170) 2px 2px 4px 0px;
+  font-family: Arial;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(9, 23, 71, 1);
+  line-height: 1.5;
+  opacity: 1;
+  padding: 10px;
 }

@@ -56,8 +56,7 @@ DJANGO_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sites",
-    "django.forms",
-    'channels',
+    "django.forms"
 ]
 
 # Put your third-party apps here
@@ -70,7 +69,7 @@ THIRD_PARTY_APPS = [
     "django_otp.plugins.otp_totp",
     "django_otp.plugins.otp_static",
     "allauth_2fa",
-    "rest_framework",
+    "rest_framework",   
     "drf_spectacular",
     "rest_framework_api_key",
     "celery_progress",
