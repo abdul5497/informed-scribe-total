@@ -13,10 +13,33 @@
   {% block top_nav_app %}
     {% include "web/components/top_nav_app.html" %}
   {% endblock top_nav_app %}
-  {% include 'web/components/messages.html' %}
+  <!-- {% include 'web/components/messages.html' %} -->
   <div class="container-fluid py-4">
     {% block app %}
     {% endblock %}
   </div>
 </main>
+{% endblock %}
+{% block page_js %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    console.log("second dashbaord paged loaded");
+    $.ajax({
+        url: '/openai/check_payed_status',
+        type: 'GET',
+        success: function (data) {
+          // Handle the response data
+          console.log('Status:', data.message);
+          if(data.message == "No payment found for this user")
+            window.location.href = "{% url 'account_logout' %}";
+          // You can perform further actions based on the response, such as displaying a success message or redirecting the user
+        },
+        error: function (xhr, status, error) {
+          console.error('Error:', error);
+          // Handle the error, e.g., display an error message to the user
+        }
+      });
+  });
+</script>
 {% endblock %}

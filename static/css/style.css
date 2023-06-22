@@ -250,6 +250,7 @@ h6 {
   display: flex;
   width: 100%;
   justify-items: left;
+  margin-bottom: 10px;
 }
 
 .navbar .dropdown ul a {

@@ -28,7 +28,7 @@
               {{ form.non_field_errors }}
               {% render_text_input form.login %}
               {% render_text_input form.password %}
-              <input class="btn btn-primary w-100" type="submit" value="{% translate "Sign In" %}">
+              <input class="btn btn-primary w-100" type="submit" id="signInButton" value="{% translate "Sign In" %}">
               <a class="text-primary text-sm text-gradient" href="{% url 'account_reset_password' %}">
                 {% translate "Forgot password?" %}
               </a>

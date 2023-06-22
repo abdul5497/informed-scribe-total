@@ -305,13 +305,17 @@ STORAGES = {
 MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_URL = "/media/"
 
+
+
+
+
 USE_S3_MEDIA = env.bool("USE_S3_MEDIA", default=False)
 if USE_S3_MEDIA:
     # Media file storage in S3
     # Using this will require configuration of the S3 bucket
     # See https://docs.saaspegasus.com/configuration.html?#storing-media-files
     AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID", default="")
-    AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
+    AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY", default="")
     AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME", default="ifh_saas_app-media")
     AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
     PUBLIC_MEDIA_LOCATION = "media"
@@ -319,7 +323,7 @@ if USE_S3_MEDIA:
     STORAGES["default"] = {
         "BACKEND": "apps.web.storage_backends.PublicMediaStorage",
     }
-
+    
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -421,6 +425,11 @@ ADMINS = [("Colin", "cedwards@informedfamilyhealth.com")]
 # Add your google analytics ID to the environment to connect to Google Analytics
 GOOGLE_ANALYTICS_ID = env("GOOGLE_ANALYTICS_ID", default="")
 
+DOMAIN_URL = env("DOMAIN_URL", default="")
+UPFRONT_PRICE_ID = env("UPFRONT_PRICE_ID", default="")
+FIRST_MODE_PRICE_ID = env("FIRST_MODE_PRICE_ID", default="")
+SECOND_MODE_PRICE_ID = env("SECOND_MODE_PRICE_ID", default="")
+
 
 # Stripe config
 # modeled to be the same as https://github.com/dj-stripe/dj-stripe
@@ -428,6 +437,7 @@ GOOGLE_ANALYTICS_ID = env("GOOGLE_ANALYTICS_ID", default="")
 # The defaults are provided to prevent crashes if your keys don't match the expected format.
 STRIPE_LIVE_PUBLIC_KEY = env("STRIPE_LIVE_PUBLIC_KEY", default="pk_live_***")
 STRIPE_LIVE_SECRET_KEY = env("STRIPE_LIVE_SECRET_KEY", default="sk_live_***")
+
 STRIPE_TEST_PUBLIC_KEY = env("STRIPE_TEST_PUBLIC_KEY", default="pk_test_***")
 STRIPE_TEST_SECRET_KEY = env("STRIPE_TEST_SECRET_KEY", default="sk_test_***")
 # Change to True in production

@@ -40,7 +40,7 @@ def _view_subscription(request, subscription_holder: SubscriptionModelBase):
     if not subscription.cancel_at_period_end:
         stripe = get_stripe_module()
         try:
-            next_invoice = stripe.Invoice.upcoming(
+            next_invoice = stripe.Invoice.upcoming( 
                 subscription=subscription.id,
             )
         except InvalidRequestError:

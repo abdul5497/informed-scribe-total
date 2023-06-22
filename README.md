@@ -33,7 +33,7 @@ Create database tables:
 ```
 
 ## Building front-end
-
+    
 To build JavaScript and CSS files, first install npm packages:
 
 ```bash
