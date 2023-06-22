@@ -363,6 +363,9 @@ body {
   background-size: cover;
 }
 
+.button_total_group{
+  margin-top: 5px;
+}
 
 @media only screen and (max-width: 600px) {
   .bubble_page {

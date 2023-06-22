@@ -307,22 +307,23 @@ MEDIA_URL = "/media/"
 
 
 
+AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME", default="ifh_saas_app-media")
+AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+PUBLIC_MEDIA_LOCATION = "media"
+MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/"
+STORAGES["default"] = {
+    "BACKEND": "apps.web.storage_backends.PublicMediaStorage",
+}
 
+PINECONE_API_KEY = env("PINECONE_API_KEY", default="")
+PINECONE_ENVIRONMENT = env("PINECONE_ENVIRONMENT", default="")
+PINECONE_ENDPOINT = env("PINECONE_ENDPOINT", default="")
 
 USE_S3_MEDIA = env.bool("USE_S3_MEDIA", default=False)
-if USE_S3_MEDIA:
-    # Media file storage in S3
-    # Using this will require configuration of the S3 bucket
-    # See https://docs.saaspegasus.com/configuration.html?#storing-media-files
-    AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID", default="")
-    AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY", default="")
-    AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME", default="ifh_saas_app-media")
-    AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
-    PUBLIC_MEDIA_LOCATION = "media"
-    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/"
-    STORAGES["default"] = {
-        "BACKEND": "apps.web.storage_backends.PublicMediaStorage",
-    }
+
+MY_MESSAGE_GLOBAL = [{'message': '', 'is_user': True}]
     
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

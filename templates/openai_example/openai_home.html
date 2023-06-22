@@ -9,7 +9,7 @@
       <div class="option-section1">
         <form id="uploadForm" enctype="multipart/form-data">
           {% csrf_token %}
-          <input type="file" name="file" required accept=".txt, .pdf, .doc, .docx, .csv">
+          <input type="file" name="file" required accept=".txt, .pdf, .doc, .docs, .csv">
           <button type="button" id="uploadButton" class="bubble_button_element">Upload</button>
         </form>
       </div>
@@ -30,12 +30,17 @@
 
         <textarea class="bubble_medical_textarea_element" id="transcript" placeholder="e.g. 'How can I treat my hurt?'">
         </textarea>
+
+        <div class="button_total_group">
+          <button type="button" id="submit_text" class="bubble_button_element">Submit</button>
+          <button type="button" id="copyt_text" class="bubble_button_element">Copy</button>
+        </div>
       </div>
 
     </div>
     <div class="right-section">
       <div class="option-section">
-        <textarea id="addionalNotes" name="addionalNotes" class="type-section" rows="5" cols="50"></textarea>
+        <textarea id="additionalNotes" name="additionalNotes" class="type-section" rows="5" cols="50"></textarea>
 
         <div class="font_button_style">
           <button class="font_bigger_style" id="addionalNotes-font-big">A</button>
@@ -50,8 +55,8 @@
 {% block page_js %}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-  $(document).ready(function() {
-    $('#uploadButton').click(function() {
+  $(document).ready(function () {
+    $('#uploadButton').click(function () {
       console.log("uploadButton clicked");
 
       var form = $('#uploadForm')[0];
@@ -63,18 +68,75 @@
         data: formData,
         processData: false,
         contentType: false,
-        success: function(data) {
+        success: function (data) {
           // Handle the response data
           console.log('Status:', data.status);
           console.log('File URL:', data.file_url);
           // You can perform further actions based on the response, such as displaying a success message or redirecting the user
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
           console.error('Error:', error);
           // Handle the error, e.g., display an error message to the user
         }
       });
     });
+    $('#submit_text').click(function () {
+      // Get the CSRF token value from the cookie
+      const csrftoken = getCookie('csrftoken');
+
+      // Get the values of the 'transcript' and 'additionalNotes' fields
+      var transcript = document.getElementById("transcript").value;
+      var additionalNotes = document.getElementById("additionalNotes").value;
+
+      // Create a new form data object and append the fields to it
+      var formData = new FormData();
+      formData.append('transcript', transcript);
+      formData.append('additionalNotes', additionalNotes);
+
+      console.log("formData:", formData);
+
+      // Send the AJAX request with the appropriate headers and data 
+      $.ajax({
+        url: '/openai/generate_response',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        headers: {
+          'X-CSRFToken': csrftoken
+        },
+        success: function (data) {
+          console.log('Status:', data.message);
+          var currentMessage = document.getElementById("result-textarea").value;
+          currentMessage += "\n" + "User:" + " " + transcript + "\n" + "Transcribe Service:" + " " + data.message;
+          console.log("currentMessage:", currentMessage);
+
+          document.getElementById("result-textarea").value = currentMessage
+          // You can perform further actions based on the response, such as displaying a success message or redirecting the user
+        },
+        error: function (xhr, status, error) {
+          console.error('Error:', error);
+          // Handle the error, e.g., display an error message to the user
+        }
+      });
+    });
+
+    // Function to get the CSRF token from the cookie
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
   });
 </script>
 {% endblock %}
