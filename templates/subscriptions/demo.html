@@ -5,7 +5,7 @@
 {% block app %}
 <section class="app-card">
   <h1>Informed Scribe</h1>
-  <div class="bubble_page">
+  <div class="bubble_page1">
     <div class="left-section">
       <div class="option-section">
         <div class="first-option-section">
@@ -90,29 +90,127 @@
 
 {% block page_js %}
 <script src="{% static 'js/app-bundle.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/socket.io-client@4.3.2/dist/socket.io.min.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
+    let usage_socket; // Declare a variable to hold the WebSocket object
+
+    let stream;
+    let mediaRecorder;
+    const CHUNK_SIZE = 4096;
 
 
-    const socket = new WebSocket("ws://localhost:8000/ws/");
+    document.getElementById('start-button').onclick = function () {
+      console.log('start-button clicked');
+      usage_socket = new WebSocket('wss://informedscribe.com/listen'); // Connect to the WebSocket
 
-    socket.onmessage = function (event) {
-        const data = JSON.parse(event.data);
-        console.log(data);
-        document.querySelector('#number').innerHTML = data.number;
+      usage_socket.onopen = function () {
+        console.log('WebSocket connected');
+      }
+
+      usage_socket.onmessage = function (event) {
+        // Handle incoming messages from the WebSocket
+      }
+
+      usage_socket.onerror = function (event) {
+        console.log(`WebSocket error: ${event}`);
+      }
+
+      navigator.mediaDevices.getUserMedia({ audio: true }).then(s => {
+        stream = s;
+        mediaRecorder = new MediaRecorder(stream, { audio: true, mimeType: 'audio/webm' });
+
+        mediaRecorder.start();
+
+        // websocket = new WebSocket("ws://" + window.location.host + "/ws/");
+
+        // send the audio stream to the WebSocket server
+        mediaRecorder.addEventListener("dataavailable", event => {
+          // websocket.send(event.data);
+        });
+      }).catch((error) => {
+        alert("Error accessing microphone: " + error);
+        // recordBtn.disabled = false;
+      });
     }
-    
-    document.getElementById("start-button").onclick = function () {
-      alert("start-button clicked");
-    };
 
-    document.getElementById("stop-button").onclick = function () {
-      alert("stop-button clicked");
-    };
+    document.getElementById('stop-button').onclick = function () {
+      console.log('stop-button clicked');
+
+      if (usage_socket && usage_socket.readyState === WebSocket.OPEN) {
+        usage_socket.close(); // Disconnect the WebSocket if it is open
+      }
+    }
+
+    document.getElementById('submit').onclick = async function () {
+      console.log('stop-button clicked');
+
+      var loadingIcon = document.getElementById('loading-icon');
+      loadingIcon.style.display = 'inline-block';
+
+      setTimeout(function () {
+        loadingIcon.style.display = 'none';
+      }, 2000);
+      await chatgptOption();
+    }
+
+    // Function to get the CSRF token from the cookie
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+
+    async function chatgptOption() {
+      const csrftoken = getCookie('csrftoken');
+
+      var message = $('#transcript').val();
+      var selectedPrompts = $('input[name="selectedPrompts"]:checked').map(function (_, el) { return $(el).val(); }).get();
+      var additionalNotes = $('#addionalNotes').val();
+      var customVal = $('#custom-label').val();
+
+      // Create data object
+      var data = {
+        message: message,
+        selectedPrompts: selectedPrompts,
+        additionalnotes: additionalNotes,
+        custom_val: customVal
+      };
+
+
+      console.log("data", data)
+      $.ajax({
+        url: '/subscriptions/get_message_chatgpt',
+        type: 'POST',
+        data: data,
+        processData: false,
+        contentType: false,
+        headers: {
+          'X-CSRFToken': csrftoken
+        },
+        success: function (data) {
+          console.log('Status:', data.chatGPTMessage);
+          document.getElementById("result-textarea").value = data.chatGPTMessage;
+        },
+        error: function (xhr, status, error) {
+          console.error('Error:', error);
+          // Handle the error, e.g., display an error message to the user
+        }
+      });
+    }
 
     document.getElementById("refresh-button").onclick = function () {
-      location.reload();
     };
 
     document.getElementById("font-big").onclick = function () {

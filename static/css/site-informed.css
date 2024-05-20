@@ -157,6 +157,26 @@ body {
   opacity: 1;
 }
 
+.type-section1 {
+  width: 547px;
+  height: 134px;
+  z-index: 9;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(9, 23, 71, 0.15);
+  border-image: initial;
+  background-color: transparent;
+  border-radius: 10px;
+  box-shadow: rgb(170 170 170) 2px 2px 4px 0px;
+  font-family: Arial;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(9, 23, 71, 1);
+  line-height: 1.5;
+  padding: 6px;
+  opacity: 1;
+}
+
 .font_button_style {
   display: flex;
   gap:5px;
@@ -365,6 +385,44 @@ body {
   background-size: cover;
 }
 
+@media only screen and (max-width: 1300px) {
+  .bubble_page {
+    flex-direction: column;
+  }
+
+  .button_total_group{
+    display: flex;
+    justify-content: center;
+  }
+
+  .bubble_textarea_element {
+    min-width: 350px;
+  }
+
+  .option-section {
+    min-width: 350px;
+  }
+
+  .button-section {
+    min-width: 350px;
+  }
+
+  .type-section {
+    width: 350px;
+  }
+
+  .type-section1 {
+    width: 100%;
+  }
+
+  .result-section {
+    width: 360px;
+  }
+
+  .bubble-element-group {
+    min-width: 350px;
+  }
+}
 
 @media only screen and (max-width: 600px) {
   .bubble_page {
@@ -386,6 +444,11 @@ body {
   .type-section {
     width: 350px;
   }
+
+  .type-section1 {
+    width: 350px;
+  }
+  
   .result-section {
     width: 360px;
   }

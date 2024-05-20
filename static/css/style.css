@@ -1878,3 +1878,9 @@ section {
   opacity: 1;
   padding: 10px;
 }
+
+@media (max-width: 768px) {
+  .option-section1{
+    justify-content: center;
+  }
+}

@@ -225,6 +225,25 @@ body {
   opacity: 1;
 }
 
+.result-section1 {
+  width: 554px;
+  height: 334px;
+  z-index: 9;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(9, 23, 71, 0.15);
+  border-image: initial;
+  background-color: transparent;
+  border-radius: 10px;
+  box-shadow: rgb(170 170 170) 2px 2px 4px 0px;
+  font-family: Arial;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(9, 23, 71, 1);
+  line-height: 1.5;
+  opacity: 1;
+}
+
 .bubble-element-group {
   display: flex;
   align-content: center;
@@ -389,6 +408,10 @@ body {
   }
   .result-section {
     width: 360px;
+  }
+
+  .result-section {
+    width: 100%;
   }
 
   .bubble-element-group {
